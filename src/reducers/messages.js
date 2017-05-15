@@ -1,4 +1,3 @@
-import Firebase from '../firebase';
 import {
   ADD_MESSAGE,
   SEND_MESSAGE,
@@ -14,21 +13,6 @@ const message = (state, action) => {
         time: action.time,
         author: action.author,
       };
-
-    case SEND_MESSAGE: {
-      const msg = {
-        text: action.text,
-        time: Date.now(),
-        author: {
-          name: action.user.name,
-          avatar: action.user.avatar,
-        },
-      };
-      const newMsgRef = Firebase.database().ref('messages').push();
-      msg.id = newMsgRef.key;
-      newMsgRef.set(msg);
-      return msg;
-    }
 
     default:
       return state;
