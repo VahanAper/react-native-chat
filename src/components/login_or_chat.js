@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
+import Login from './login';
+
 const LoginOrChat = ({ authorized }) => {
   if (authorized) {
     return (
@@ -12,9 +14,7 @@ const LoginOrChat = ({ authorized }) => {
   }
 
   return (
-    <View>
-      <Text>Login</Text>
-    </View>
+    <Login />
   );
 };
 
