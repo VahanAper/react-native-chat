@@ -1,15 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import Login from './login';
+import Chat from './chat';
 
 const LoginOrChat = ({ authorized }) => {
   if (authorized) {
     return (
-      <View>
-        <Text>Chat</Text>
-      </View>
+      <Chat />
     );
   }
 

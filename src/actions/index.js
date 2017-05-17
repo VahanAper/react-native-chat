@@ -5,12 +5,35 @@ import {
   RECEIVED_MESSAGES,
   USER_START_AUTHORIZING,
   USER_AUTHORIZED,
+  SET_USER_NAME,
+  SET_USER_AVATAR,
+  UPDATE_MESSAGES_HEIGHT,
 } from '../types';
 
 export const addMessage = message => ({
   type: ADD_MESSAGE,
   ...message,
 });
+
+export const sendMessage = (text, user) => {
+  console.log('user', user);
+  return function (dispatch) {
+    const msg = {
+      text,
+      time: Date.now(),
+      author: {
+        name: user.name,
+        avatar: user.avatar,
+      },
+    };
+    const newMsgRef = Firebase.database().ref('messages').push();
+
+    msg.id = newMsgRef.key;
+    newMsgRef.set(msg);
+
+    dispatch(addMessage(msg));
+  };
+};
 
 export const receivedMessages = () => ({
   type: RECEIVED_MESSAGES,
@@ -62,5 +85,24 @@ export const login = () => {
         dispatch(userAuthorized());
         dispatch(fetchMessages());
       });
+  };
+};
+
+export const setUserName = name => ({
+  type: SET_USER_NAME,
+  name,
+});
+
+export const setUserAvatar = avatar => ({
+  type: SET_USER_AVATAR,
+  avatar,
+});
+
+export const updateMessagesHeight = (event) => {
+  const layout = event.nativeEvent.layout;
+
+  return {
+    type: UPDATE_MESSAGES_HEIGHT,
+    height: layout.height,
   };
 };

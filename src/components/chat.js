@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import ReactNative from 'react-native';
+import { connect } from 'react-redux';
 import {
   Screen,
   Title,
 } from '@shoutem/ui';
-import KeyboardAwareScrollView from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { sendMessage } from '../actions';
 import Messages from './messages';
@@ -85,4 +86,9 @@ class Chat extends Component {
   }
 }
 
-export default Chat;
+const mapStateToProps = state => ({
+  user: state.user,
+  chatHeight: state.chatroom.meta.height,
+});
+
+export default connect(mapStateToProps)(Chat);
